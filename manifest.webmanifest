@@ -1,0 +1,45 @@
+{
+    "id": "/",
+    "name": "PC Manager PWA",
+    "short_name": "PCManager",
+    "description": "Sistema profesional para la gestión de computadoras, usuarios, préstamos y mantenimiento.",
+    "start_url": "./index.html",
+    "scope": "./",
+    "display": "standalone",
+    "display_override": [
+        "window-controls-overlay",
+        "standalone"
+    ],
+    "orientation": "portrait-primary",
+    "theme_color": "#2563eb",
+    "background_color": "#0f172a",
+    "lang": "es-SV",
+
+    "icons":[
+
+        {
+            "src":"img/icon-192.png",
+            "sizes":"192x192",
+            "type":"image/png",
+            "purpose":"any maskable"
+        },
+
+        {
+            "src":"img/icon-512.png",
+            "sizes":"512x512",
+            "type":"image/png",
+            "purpose":"any maskable"
+        }
+
+    ],
+
+    "categories":[
+
+        "business",
+
+        "productivity",
+
+        "utilities"
+
+    ]
+}
