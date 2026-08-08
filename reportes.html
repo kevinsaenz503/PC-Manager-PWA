@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Reportes | PC Manager</title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<aside class="sidebar">
+
+<h2>💻 PC Manager</h2>
+
+<ul>
+
+<li><a th:href="@{/}">🏠 Dashboard</a></li>
+<li><a th:href="@{/computadoras}">💻 Computadoras</a></li>
+<li><a th:href="@{/usuarios}">👤 Usuarios</a></li>
+<li><a th:href="@{/prestamos}">📦 Préstamos</a></li>
+<li><a th:href="@{/mantenimiento}">🔧 Mantenimiento</a></li>
+<li><a th:href="@{/perifericos}">🖨️ Periféricos</a></li>
+<li><a class="activo" th:href="@{/reportes}">📊 Reportes</a></li>
+<li><a th:href="@{/configuracion}">⚙ Configuración</a></li>
+
+</ul>
+
+</aside>
+
+<main class="contenido">
+    <div class="header">
+
+    <div>
+
+        <h1>PC Manager</h1>
+
+        <span>Sistema de Gestión Informática</span>
+
+    </div>
+
+    <div class="acciones-header">
+
+        <button id="modoOscuro">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <span>
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Administrador
+
+        </span>
+
+    </div>
+
+</div>
+
+<h1>📊 Reportes del Sistema</h1>
+
+<div class="cards">
+
+<div class="card">
+
+<h3>Computadoras</h3>
+
+<h2 id="pcTotal">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Usuarios</h3>
+
+<h2 id="usuariosTotal">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Préstamos</h3>
+
+<h2 id="prestamosTotal">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Mantenimientos</h3>
+
+<h2 id="mantenimientosTotal">0</h2>
+
+</div>
+
+<div class="card">
+
+<h3>Periféricos</h3>
+
+<h2 id="perifericosTotal">0</h2>
+
+</div>
+
+</div>
+
+<div class="paneles">
+
+<div class="panel">
+
+<h2>Estado de Computadoras</h2>
+
+<canvas id="graficaEstado"></canvas>
+
+</div>
+
+<div class="panel">
+
+<h2>Inventario General</h2>
+
+<canvas id="graficaInventario"></canvas>
+
+</div>
+
+</div>
+
+<div style="margin-top:30px;">
+
+<button id="exportarCSV">
+
+<i class="fa-solid fa-file-csv"></i>
+
+Exportar CSV
+
+</button>
+
+<button onclick="window.print()">
+
+<i class="fa-solid fa-print"></i>
+
+Imprimir
+
+</button>
+
+</div>
+
+</main>
+
+</div>
+
+<script th:src="@{/js/reportes.js}"></script>
+<script th:src="@{/js/tema.js}"></script>
+<script th:src="@{/js/pwa.js}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Computadoras | PC Manager</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+</head>
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <h2>💻 PC Manager</h2>
+
+        <ul>
+
+<li><a th:href="@{/}">🏠 Dashboard</a></li>
+<li><a class="activo"   th:href="@{/computadoras}">💻 Computadoras</a></li>
+<li><a th:href="@{/usuarios}">👤 Usuarios</a></li>
+<li><a th:href="@{/prestamos}">📦 Préstamos</a></li>
+<li><a th:href="@{/mantenimiento}">🔧 Mantenimiento</a></li>
+<li><a th:href="@{/perifericos}">🖨️ Periféricos</a></li>
+<li><a th:href="@{/reportes}">📊 Reportes</a></li>
+<li><a th:href="@{/configuracion}">⚙ Configuración</a></li>
+
+</ul>
+
+    </aside>
+
+    <main class="contenido">
+        <div class="header">
+
+    <div>
+
+        <h1>PC Manager</h1>
+
+        <span>Sistema de Gestión Informática</span>
+
+    </div>
+
+    <div class="acciones-header">
+
+        <button id="modoOscuro">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <span>
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Administrador
+
+        </span>
+
+    </div>
+
+</div>
+
+        <h1>💻 Gestión de Computadoras</h1>
+        
+        
+        <div class="barra-superior">
+
+    <input
+        type="text"
+        id="buscar"
+        placeholder="🔍 Buscar por código, marca o modelo">
+
+</div>
+
+        <form id="formPC">
+
+            <input type="text" id="codigo" placeholder="Código" required>
+
+            <input type="text" id="marca" placeholder="Marca" required>
+
+            <input type="text" id="modelo" placeholder="Modelo" required>
+
+            <input type="text" id="procesador" placeholder="Procesador">
+
+            <input type="text" id="ram" placeholder="RAM">
+
+            <input type="text" id="disco" placeholder="Disco">
+
+            <select id="estado">
+
+                <option>Disponible</option>
+
+                <option>Prestada</option>
+
+                <option>Mantenimiento</option>
+
+            </select>
+
+            <button type="submit">
+
+                <i class="fas fa-plus"></i>
+
+                Guardar
+
+            </button>
+
+        </form>
+
+        <table>
+
+    <thead>
+
+        <tr>
+
+            <th>Código</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Procesador</th>
+            <th>RAM</th>
+            <th>Disco</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+
+        </tr>
+
+    </thead>
+
+    <tbody id="tablaPC">
+
+    </tbody>
+
+</table>
+
+    </main>
+
+</div>
+
+<script th:src="@{/js/computadoras.js}"></script>
+<script th:src="@{/js/tema.js}"></script>
+<script th:src="@{/js/pwa.js}"></script>
+
+</body>
+</html>

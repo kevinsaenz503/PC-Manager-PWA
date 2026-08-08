@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Mantenimiento</title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<aside class="sidebar">
+
+<h2>💻 PC Manager</h2>
+
+<ul>
+
+<li><a th:href="@{/}">🏠 Dashboard</a></li>
+
+<li><a th:href="@{/computadoras}">💻 Computadoras</a></li>
+
+<li><a th:href="@{/usuarios}">👤 Usuarios</a></li>
+
+<li><a th:href="@{/prestamos}">📦 Préstamos</a></li>
+
+<li><a class="activo" th:href="@{/mantenimiento}">
+🔧 Mantenimiento
+</a></li>
+
+<li><a th:href="@{/perifericos}">🖨️ Periféricos</a></li>
+
+<li><a th:href="@{/reportes}">📊 Reportes</a></li>
+
+<li><a th:href="@{/configuracion}">⚙ Configuración</a></li>
+
+</ul>
+
+</aside>
+
+<main class="contenido">
+    <div class="header">
+
+    <div>
+
+        <h1>PC Manager</h1>
+
+        <span>Sistema de Gestión Informática</span>
+
+    </div>
+
+    <div class="acciones-header">
+
+        <button id="modoOscuro">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <span>
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Administrador
+
+        </span>
+
+    </div>
+
+</div>
+
+<h1>🔧 Gestión de Mantenimiento</h1>
+
+<form id="formMantenimiento">
+
+<select id="computadora" required>
+
+</select>
+
+<select id="tipo">
+
+<option>Preventivo</option>
+
+<option>Correctivo</option>
+
+</select>
+
+<input
+type="text"
+id="tecnico"
+placeholder="Técnico responsable"
+required>
+
+<input
+type="date"
+id="fechaIngreso"
+required>
+
+<input
+type="date"
+id="fechaSalida">
+
+<input
+type="number"
+id="costo"
+placeholder="Costo">
+
+<input
+type="text"
+id="observaciones"
+placeholder="Observaciones">
+
+<button type="submit">
+
+<i class="fa-solid fa-screwdriver-wrench"></i>
+
+Registrar
+
+</button>
+
+</form>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Equipo</th>
+
+<th>Tipo</th>
+
+<th>Técnico</th>
+
+<th>Ingreso</th>
+
+<th>Salida</th>
+
+<th>Costo</th>
+
+<th>Estado</th>
+
+<th>Acciones</th>
+
+</tr>
+
+</thead>
+
+<tbody id="tablaMantenimiento">
+
+</tbody>
+
+</table>
+
+</main>
+
+</div>
+
+<script th:src="@{/js/mantenimiento.js}"></script>
+<script th:src="@{/js/tema.js}"></script>
+<script th:src="@{/js/pwa.js}"></script>
+
+</body>
+
+</html>

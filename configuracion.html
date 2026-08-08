@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Configuración | PC Manager</title>
+
+<link rel="stylesheet" th:href="@{/css/style.css}">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<aside class="sidebar">
+
+<h2>💻 PC Manager</h2>
+
+<ul>
+
+<li><a th:href="@{/}">🏠 Dashboard</a></li>
+<li><a th:href="@{/computadoras}">💻 Computadoras</a></li>
+<li><a th:href="@{/usuarios}">👤 Usuarios</a></li>
+<li><a th:href="@{/prestamos}">📦 Préstamos</a></li>
+<li><a th:href="@{/mantenimiento}">🔧 Mantenimiento</a></li>
+<li><a th:href="@{/perifericos}">🖨️ Periféricos</a></li>
+<li><a th:href="@{/reportes}">📊 Reportes</a></li>
+<li><a class="activo" th:href="@{/configuracion}">
+⚙ Configuración
+</a></li>
+
+</ul>
+
+</aside>
+
+<main class="contenido">
+    <div class="header">
+
+    <div>
+
+        <h1>PC Manager</h1>
+
+        <span>Sistema de Gestión Informática</span>
+
+    </div>
+
+    <div class="acciones-header">
+
+        <button id="modoOscuro">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <span>
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Administrador
+
+        </span>
+
+    </div>
+
+</div>
+
+<h1>⚙ Configuración del Sistema</h1>
+
+<div class="panel">
+
+<h2>Información General</h2>
+
+<label>Nombre de la institución</label>
+
+<input
+type="text"
+id="institucion"
+placeholder="Institución">
+
+<label>Administrador</label>
+
+<input
+type="text"
+id="administrador"
+placeholder="Administrador">
+
+<button id="guardar">
+
+💾 Guardar Configuración
+
+</button>
+
+</div>
+
+<br>
+
+<div class="panel">
+
+<h2>Respaldo de Información</h2>
+
+<button id="backup">
+
+📥 Descargar Backup
+
+</button>
+
+<input
+type="file"
+id="restaurar"
+accept=".json">
+
+</div>
+
+<br>
+
+<div class="panel">
+
+<h2>Restablecer Sistema</h2>
+
+<button id="reiniciar">
+
+🗑 Eliminar Todos los Datos
+
+</button>
+
+</div>
+
+<br>
+
+<div class="panel">
+
+<h2>Acerca del Sistema</h2>
+
+<p><strong>Nombre:</strong> PC Manager PWA</p>
+
+<p><strong>Versión:</strong> 1.0</p>
+
+<p><strong>Tecnologías:</strong></p>
+
+<ul>
+
+<li>Java 17</li>
+
+<li>Spring Boot</li>
+
+<li>Thymeleaf</li>
+
+<li>HTML5</li>
+
+<li>CSS3</li>
+
+<li>JavaScript</li>
+
+<li>PWA</li>
+
+</ul>
+
+</div>
+
+</main>
+
+</div>
+
+<script th:src="@{/js/configuracion.js}"></script>
+<script th:src="@{/js/tema.js}"></script>
+<script th:src="@{/js/pwa.js}"></script>
+
+</body>
+
+</html>

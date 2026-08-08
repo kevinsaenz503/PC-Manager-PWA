@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+    
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | PC Manager</title>
+
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="manifest" th:href="@{/manifest.webmanifest}">
+    <meta name="theme-color" content="#1565C0">
+    <link rel="icon" href="/img/icon-192.png">
+    
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Menú lateral -->
+
+    <aside class="sidebar">
+        
+        
+
+        <h2>💻 PC Manager</h2>
+
+        <ul>
+
+<li><a class="activo"  th:href="@{/}">🏠 Dashboard</a></li>
+<li><a th:href="@{/computadoras}">💻 Computadoras</a></li>
+<li><a th:href="@{/usuarios}">👤 Usuarios</a></li>
+<li><a th:href="@{/prestamos}">📦 Préstamos</a></li>
+<li><a th:href="@{/mantenimiento}">🔧 Mantenimiento</a></li>
+<li><a th:href="@{/perifericos}">🖨️ Periféricos</a></li>
+<li><a th:href="@{/reportes}">📊 Reportes</a></li>
+<li><a th:href="@{/configuracion}">⚙ Configuración</a></li>
+
+</ul>
+
+    </aside>
+
+    <!-- Contenido -->
+
+    <main class="contenido">
+
+        <div class="header">
+
+    <div>
+
+        <h1>PC Manager</h1>
+
+        <span>Sistema de Gestión Informática</span>
+
+    </div>
+
+    <div class="acciones-header">
+
+        <button id="modoOscuro">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <span>
+
+            <i class="fa-solid fa-user-shield"></i>
+
+            Administrador
+
+        </span>
+
+    </div>
+
+</div>
+
+        <!-- Tarjetas -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fas fa-desktop"></i>
+
+                <h3>Computadoras</h3>
+
+                <h2 id="totalPC">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fas fa-users"></i>
+
+                <h3>Usuarios</h3>
+
+                <h2 id="totalUsuarios">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fas fa-box"></i>
+
+                <h3>Préstamos</h3>
+
+                <h2 id="totalPrestamos">0</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fas fa-screwdriver-wrench"></i>
+
+                <h3>Mantenimientos</h3>
+
+                <h2 id="totalMant">0</h2>
+
+            </div>
+
+        </section>
+
+        <!-- Información -->
+
+        <section class="paneles">
+
+    <!-- Estado del Sistema -->
+
+    <div class="panel">
+
+        <h2>
+            <i class="fa-solid fa-server"></i>
+            Estado del Sistema
+        </h2>
+
+        <div class="estado-item">
+            <span>🟢 Sistema</span>
+            <strong>En línea</strong>
+        </div>
+
+        <div class="estado-item">
+            <span>💾 Base Local</span>
+            <strong>LocalStorage Activo</strong>
+        </div>
+
+        <div class="estado-item">
+            <span>📱 PWA</span>
+            <strong>Lista para instalar</strong>
+        </div>
+
+        <div class="estado-item">
+            <span>🌐 Conexión</span>
+            <strong id="conexion">Verificando...</strong>
+        </div>
+
+        <div class="estado-item">
+            <span>🕒 Última actualización</span>
+            <strong id="horaActual"></strong>
+        </div>
+
+    </div>
+
+    <!-- Resumen del Sistema -->
+
+    
+
+<section class="panel">
+
+    <h2>
+
+        <i class="fa-solid fa-clock-rotate-left"></i>
+
+        Actividad Reciente
+
+    </h2>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Hora</th>
+
+                <th>Evento</th>
+
+                <th>Estado</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            <tr>
+
+                <td id="horaEvento"></td>
+
+                <td>Sistema iniciado correctamente</td>
+
+                <td style="color:green;">✔ Correcto</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Automático</td>
+
+                <td>Datos sincronizados desde LocalStorage</td>
+
+                <td style="color:green;">✔ Correcto</td>
+
+            </tr>
+
+            <tr>
+
+                <td>Automático</td>
+
+                <td>PWA preparada para funcionar sin conexión</td>
+
+                <td style="color:green;">✔ Activa</td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+</section>
+
+    </main>
+
+</div>
+
+<script th:src="@{/js/dashboard.js}"></script>
+<script th:src="@{/js/tema.js}"></script>
+<script th:src="@{/js/pwa.js}"></script>
+
+<script>
+
+if("serviceWorker" in navigator){
+
+    window.addEventListener("load",()=>{
+
+        navigator.serviceWorker.register("./sw.js")
+
+        .then(()=>{
+
+            console.log("✅ Service Worker registrado");
+
+        })
+
+        .catch(error=>{
+
+            console.error("Error:",error);
+
+        });
+
+    });
+
+}
+
+</script>
+
+</body>
+</html>
