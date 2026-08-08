@@ -7,7 +7,7 @@
 
 <title>Préstamos</title>
 
-<link rel="stylesheet" th:href="@{/css/style.css}">
+<link rel="stylesheet" href="./css/style.css">
 
 <link rel="stylesheet"
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
@@ -24,14 +24,14 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
 
 <ul>
 
-<li><a th:href="@{/}">🏠 Dashboard</a></li>
-<li><a th:href="@{/computadoras}">💻 Computadoras</a></li>
-<li><a th:href="@{/usuarios}">👤 Usuarios</a></li>
-<li><a class="activo" th:href="@{/prestamos}">📦 Préstamos</a></li>
-<li><a th:href="@{/mantenimiento}">🔧 Mantenimiento</a></li>
-<li><a th:href="@{/perifericos}">🖨️ Periféricos</a></li>
-<li><a th:href="@{/reportes}">📊 Reportes</a></li>
-<li><a th:href="@{/configuracion}">⚙ Configuración</a></li>
+<li><a href="./">🏠 Dashboard</a></li>
+<li><a href="./computadoras">💻 Computadoras</a></li>
+<li><a href="./usuarios">👤 Usuarios</a></li>
+<li><a class="activo" href="./prestamos">📦 Préstamos</a></li>
+<li><a href="./mantenimiento">🔧 Mantenimiento</a></li>
+<li><a href="./perifericos">🖨️ Periféricos</a></li>
+<li><a href="./reportes">📊 Reportes</a></li>
+<li><a href="./configuracion">⚙ Configuración</a></li>
 
 </ul>
 
@@ -129,9 +129,7 @@ Registrar
 
 </div>
 
-<script th:src="@{/js/prestamos.js}"></script>
-<script th:src="@{/js/tema.js}"></script>
-<script th:src="@{/js/pwa.js}"></script>
+<script src="./js/prestamos.js"></script>
 
 </body>
 </html>
