@@ -1,62 +1,60 @@
-const CACHE_NAME = "pc-manager-v3";
+const CACHE_NAME = "pc-manager-v4";
 
 const ARCHIVOS = [
     "./",
     "./index.html",
-
-    "./computadoras.html",
-    "./usuarios.html",
-    "./prestamos.html",
-    "./mantenimiento.html",
-    "./perifericos.html",
-    "./reportes.html",
-    "./configuracion.html",
-
     "./css/style.css",
-
-    "./js/app.js",
-    "./js/dashboard.js",
-    "./js/computadoras.js",
-    "./js/usuarios.js",
-    "./js/prestamos.js",
-    "./js/mantenimiento.js",
-    "./js/perifericos.js",
-    "./js/reportes.js",
-    "./js/configuracion.js",
-    "./js/pwa.js",
-
-    "./manifest.webmanifest",
-
-    "./img/icon-192.png",
-    "./img/icon-512.png"
+    "./manifest.webmanifest"
 ];
 
 
+// =====================================================
 // INSTALACIÓN
+// =====================================================
+
 self.addEventListener("install", event => {
 
     event.waitUntil(
 
         caches.open(CACHE_NAME)
-            .then(cache => {
+            .then(async cache => {
 
-                console.log("Creando caché de PC Manager");
+                console.log("Instalando PC Manager PWA");
 
-                return cache.addAll(ARCHIVOS);
+                for (const archivo of ARCHIVOS) {
+
+                    try {
+
+                        await cache.add(archivo);
+
+                        console.log(
+                            "Guardado en caché:",
+                            archivo
+                        );
+
+                    } catch (error) {
+
+                        console.warn(
+                            "No se pudo guardar:",
+                            archivo
+                        );
+
+                    }
+
+                }
 
             })
-            .then(() => {
-
-                return self.skipWaiting();
-
-            })
+            .then(() => self.skipWaiting())
 
     );
 
 });
 
 
+// =====================================================
 // ACTIVACIÓN
+// =====================================================
+
 self.addEventListener("activate", event => {
 
     event.waitUntil(
@@ -66,9 +64,13 @@ self.addEventListener("activate", event => {
 
                 return Promise.all(
 
-                    keys
-                        .filter(key => key !== CACHE_NAME)
-                        .map(key => caches.delete(key))
+                    keys.map(key => {
+
+                        if (key !== CACHE_NAME) {
+                            return caches.delete(key);
+                        }
+
+                    })
 
                 );
 
@@ -80,61 +82,70 @@ self.addEventListener("activate", event => {
 });
 
 
+// =====================================================
 // PETICIONES
+// =====================================================
+
 self.addEventListener("fetch", event => {
 
-    const request = event.request;
-
-    // Solo manejar peticiones GET
-    if (request.method !== "GET") {
+    if (event.request.method !== "GET") {
         return;
     }
 
-    // No interceptar peticiones externas
-    if (!request.url.startsWith(self.location.origin)) {
+    const url = new URL(event.request.url);
+
+    // No controlar páginas externas
+    if (url.origin !== location.origin) {
         return;
     }
 
     event.respondWith(
 
-        caches.match(request)
-            .then(cachedResponse => {
+        caches.match(event.request)
+            .then(cached => {
 
-                // Si existe en caché, usarlo
-                if (cachedResponse) {
-                    return cachedResponse;
+                if (cached) {
+                    return cached;
                 }
 
-                // Si no existe, intentar Internet
-                return fetch(request)
-                    .then(networkResponse => {
+                return fetch(event.request)
+                    .then(response => {
 
-                        // Guardar solamente respuestas válidas
                         if (
-                            networkResponse &&
-                            networkResponse.status === 200 &&
-                            networkResponse.type === "basic"
+                            response &&
+                            response.status === 200
                         ) {
 
-                            const responseClone =
-                                networkResponse.clone();
+                            const copia =
+                                response.clone();
 
                             caches.open(CACHE_NAME)
                                 .then(cache => {
-                                    cache.put(request, responseClone);
+
+                                    cache.put(
+                                        event.request,
+                                        copia
+                                    );
+
                                 });
 
                         }
 
-                        return networkResponse;
+                        return response;
 
                     })
                     .catch(() => {
 
-                        // Si es una página y no hay Internet
-                        if (request.mode === "navigate") {
+                        // Si está offline y es una navegación,
+                        // regresar al inicio.
 
-                            return caches.match("./index.html");
+                        if (
+                            event.request.mode === "navigate"
+                        ) {
+
+                            return caches.match(
+                                "./index.html"
+                            );
 
                         }
 
