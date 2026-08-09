@@ -1,32 +1,20 @@
-const VERSION = "2.0.0";
-const CACHE_NAME = `pcmanager-${VERSION}`;
+const CACHE_NAME = "pc-manager-v3";
 
-const APP_SHELL = [
-
+const ARCHIVOS = [
     "./",
-
     "./index.html",
 
     "./computadoras.html",
-
     "./usuarios.html",
-
     "./prestamos.html",
-
     "./mantenimiento.html",
-
     "./perifericos.html",
-
     "./reportes.html",
-
     "./configuracion.html",
-
-    "./offline.html",
-
-    "./manifest.webmanifest",
 
     "./css/style.css",
 
+    "./js/app.js",
     "./js/dashboard.js",
     "./js/computadoras.js",
     "./js/usuarios.js",
@@ -35,26 +23,31 @@ const APP_SHELL = [
     "./js/perifericos.js",
     "./js/reportes.js",
     "./js/configuracion.js",
-    "./js/tema.js",
+    "./js/pwa.js",
+
+    "./manifest.webmanifest",
 
     "./img/icon-192.png",
     "./img/icon-512.png"
-
 ];
 
-self.addEventListener("install", event => {
 
-    self.skipWaiting();
+// INSTALACIÓN
+self.addEventListener("install", event => {
 
     event.waitUntil(
 
         caches.open(CACHE_NAME)
-
             .then(cache => {
 
-                console.log("Cache creada");
+                console.log("Creando caché de PC Manager");
 
-                return cache.addAll(APP_SHELL);
+                return cache.addAll(ARCHIVOS);
+
+            })
+            .then(() => {
+
+                return self.skipWaiting();
 
             })
 
@@ -62,65 +55,88 @@ self.addEventListener("install", event => {
 
 });
 
+
+// ACTIVACIÓN
 self.addEventListener("activate", event => {
 
     event.waitUntil(
 
         caches.keys()
+            .then(keys => {
 
-            .then(keys =>
+                return Promise.all(
 
-                Promise.all(
+                    keys
+                        .filter(key => key !== CACHE_NAME)
+                        .map(key => caches.delete(key))
 
-                    keys.map(key => {
+                );
 
-                        if(key !== CACHE_NAME){
-
-                            return caches.delete(key);
-
-                        }
-
-                    })
-
-                )
-
-            )
-
+            })
             .then(() => self.clients.claim())
 
     );
 
 });
 
+
+// PETICIONES
 self.addEventListener("fetch", event => {
 
-    if(event.request.method !== "GET") return;
+    const request = event.request;
+
+    // Solo manejar peticiones GET
+    if (request.method !== "GET") {
+        return;
+    }
+
+    // No interceptar peticiones externas
+    if (!request.url.startsWith(self.location.origin)) {
+        return;
+    }
 
     event.respondWith(
 
-        fetch(event.request)
+        caches.match(request)
+            .then(cachedResponse => {
 
-            .then(response => {
+                // Si existe en caché, usarlo
+                if (cachedResponse) {
+                    return cachedResponse;
+                }
 
-                const copia = response.clone();
+                // Si no existe, intentar Internet
+                return fetch(request)
+                    .then(networkResponse => {
 
-                caches.open(CACHE_NAME)
+                        // Guardar solamente respuestas válidas
+                        if (
+                            networkResponse &&
+                            networkResponse.status === 200 &&
+                            networkResponse.type === "basic"
+                        ) {
 
-                    .then(cache => cache.put(event.request,copia));
+                            const responseClone =
+                                networkResponse.clone();
 
-                return response;
+                            caches.open(CACHE_NAME)
+                                .then(cache => {
+                                    cache.put(request, responseClone);
+                                });
 
-            })
+                        }
 
-            .catch(() => {
+                        return networkResponse;
 
-                return caches.match(event.request)
+                    })
+                    .catch(() => {
 
-                    .then(cacheResponse => {
+                        // Si es una página y no hay Internet
+                        if (request.mode === "navigate") {
 
-                        return cacheResponse ||
+                            return caches.match("./index.html");
 
-                        caches.match("./offline.html");
+                        }
 
                     });
 
