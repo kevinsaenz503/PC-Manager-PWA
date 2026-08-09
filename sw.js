@@ -1,25 +1,51 @@
-const CACHE_NAME = "pc-manager-v4";
+const CACHE_NAME = "pc-manager-v5";
 
 const ARCHIVOS = [
     "./",
     "./index.html",
+
+    "./computadoras.html",
+    "./usuarios.html",
+    "./prestamos.html",
+    "./mantenimiento.html",
+    "./perifericos.html",
+    "./reportes.html",
+    "./configuracion.html",
+
     "./css/style.css",
-    "./manifest.webmanifest"
+
+    "./js/app.js",
+    "./js/dashboard.js",
+    "./js/computadoras.js",
+    "./js/usuarios.js",
+    "./js/prestamos.js",
+    "./js/mantenimiento.js",
+    "./js/perifericos.js",
+    "./js/reportes.js",
+    "./js/configuracion.js",
+
+    "./manifest.webmanifest",
+
+    "./img/icon-192.png",
+    "./img/icon-512.png"
 ];
 
 
-// =====================================================
-// INSTALACIÓN
-// =====================================================
+/* =====================================================
+   INSTALACIÓN
+   ===================================================== */
 
 self.addEventListener("install", event => {
 
     event.waitUntil(
 
         caches.open(CACHE_NAME)
+
             .then(async cache => {
 
-                console.log("Instalando PC Manager PWA");
+                console.log(
+                    "Instalando PC Manager PWA..."
+                );
 
                 for (const archivo of ARCHIVOS) {
 
@@ -28,14 +54,14 @@ self.addEventListener("install", event => {
                         await cache.add(archivo);
 
                         console.log(
-                            "Guardado en caché:",
+                            "✓ Guardado:",
                             archivo
                         );
 
                     } catch (error) {
 
                         console.warn(
-                            "No se pudo guardar:",
+                            "⚠ No se pudo guardar:",
                             archivo
                         );
 
@@ -44,22 +70,28 @@ self.addEventListener("install", event => {
                 }
 
             })
-            .then(() => self.skipWaiting())
+
+            .then(() => {
+
+                return self.skipWaiting();
+
+            })
 
     );
 
 });
 
 
-// =====================================================
-// ACTIVACIÓN
-// =====================================================
+/* =====================================================
+   ACTIVACIÓN
+   ===================================================== */
 
 self.addEventListener("activate", event => {
 
     event.waitUntil(
 
         caches.keys()
+
             .then(keys => {
 
                 return Promise.all(
@@ -67,6 +99,12 @@ self.addEventListener("activate", event => {
                     keys.map(key => {
 
                         if (key !== CACHE_NAME) {
+
+                            console.log(
+                                "Eliminando caché antigua:",
+                                key
+                            );
+
                             return caches.delete(key);
                         }
 
@@ -75,55 +113,71 @@ self.addEventListener("activate", event => {
                 );
 
             })
-            .then(() => self.clients.claim())
+
+            .then(() => {
+
+                return self.clients.claim();
+
+            })
 
     );
 
 });
 
 
-// =====================================================
-// PETICIONES
-// =====================================================
+/* =====================================================
+   PETICIONES
+   ===================================================== */
 
 self.addEventListener("fetch", event => {
 
-    if (event.request.method !== "GET") {
+    const request = event.request;
+
+    // Solo peticiones GET
+    if (request.method !== "GET") {
         return;
     }
 
-    const url = new URL(event.request.url);
+    const url = new URL(request.url);
 
-    // No controlar páginas externas
-    if (url.origin !== location.origin) {
+    // No interceptar páginas o recursos externos
+    if (url.origin !== self.location.origin) {
         return;
     }
 
     event.respondWith(
 
-        caches.match(event.request)
-            .then(cached => {
+        caches.match(request)
 
-                if (cached) {
-                    return cached;
+            .then(cachedResponse => {
+
+                // Primero buscar en caché
+                if (cachedResponse) {
+
+                    return cachedResponse;
+
                 }
 
-                return fetch(event.request)
-                    .then(response => {
+                // Si no está en caché,
+                // intentar obtenerlo de Internet
+                return fetch(request)
+
+                    .then(networkResponse => {
 
                         if (
-                            response &&
-                            response.status === 200
+                            networkResponse &&
+                            networkResponse.status === 200
                         ) {
 
                             const copia =
-                                response.clone();
+                                networkResponse.clone();
 
                             caches.open(CACHE_NAME)
+
                                 .then(cache => {
 
                                     cache.put(
-                                        event.request,
+                                        request,
                                         copia
                                     );
 
@@ -131,16 +185,20 @@ self.addEventListener("fetch", event => {
 
                         }
 
-                        return response;
+                        return networkResponse;
 
                     })
+
                     .catch(() => {
 
-                        // Si está offline y es una navegación,
-                        // regresar al inicio.
+                        /*
+                         * Si no hay Internet y el usuario
+                         * está intentando abrir una página,
+                         * mostrar el Dashboard.
+                         */
 
                         if (
-                            event.request.mode === "navigate"
+                            request.mode === "navigate"
                         ) {
 
                             return caches.match(
