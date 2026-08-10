@@ -22,37 +22,57 @@ console.log(error);
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    /* =========================================
+       MODO OSCURO
+       ========================================= */
+
     const botonModo = document.getElementById("modoOscuro");
 
-    if (!botonModo) {
-        return;
-    }
-
-    // Recuperar configuración guardada
-    const modoGuardado = localStorage.getItem("pcmanager-modo");
-
-    if (modoGuardado === "oscuro") {
+    // Aplicar el modo guardado en todas las páginas
+    if (localStorage.getItem("modo") === "oscuro") {
         document.body.classList.add("dark");
-        botonModo.textContent = "☀️";
-    } else {
-        botonModo.textContent = "🌙";
     }
 
-    // Cambiar modo
-    botonModo.addEventListener("click", () => {
+    // El botón solamente existe en Configuración
+    if (botonModo) {
 
-        document.body.classList.toggle("dark");
+        actualizarBoton();
 
-        const oscuro = document.body.classList.contains("dark");
+        botonModo.addEventListener("click", () => {
 
-        if (oscuro) {
-            localStorage.setItem("pcmanager-modo", "oscuro");
+            document.body.classList.toggle("dark");
+
+            const oscuro =
+                document.body.classList.contains("dark");
+
+            localStorage.setItem(
+                "modo",
+                oscuro ? "oscuro" : "claro"
+            );
+
+            actualizarBoton();
+
+        });
+
+    }
+
+
+    function actualizarBoton() {
+
+        if (!botonModo) return;
+
+        if (document.body.classList.contains("dark")) {
+
             botonModo.textContent = "☀️";
+            botonModo.title = "Cambiar a modo claro";
+
         } else {
-            localStorage.setItem("pcmanager-modo", "claro");
+
             botonModo.textContent = "🌙";
+            botonModo.title = "Cambiar a modo oscuro";
+
         }
 
-    });
+    }
 
 });
