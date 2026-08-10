@@ -393,35 +393,83 @@ body {
 
 
 /* =====================================================
-   BOTÓN MODO OSCURO
+  MODO OSCURO
+   ===================================================== */
+/* =====================================================
+   MODO OSCURO - PC MANAGER
    ===================================================== */
 
-#modoOscuro {
-    width: 44px;
-    height: 44px;
-
-    padding: 0;
-
-    border: none;
-    border-radius: 10px;
-
-    background: var(--principal);
-    color: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 20px;
-
-    cursor: pointer;
-
-    transition: 0.3s;
+body.dark {
+    background: #101820;
+    color: #ffffff;
 }
 
-#modoOscuro:hover {
-    transform: scale(1.05);
-    opacity: 0.9;
+/* Encabezado PC Manager */
+body.dark .topbar {
+    background: #1c2836 !important;
+    color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+}
+
+/* Nombre PC Manager */
+body.dark .topbar .marca h1,
+body.dark .marca h1 {
+    color: #e8f1f8 !important;
+}
+
+/* Descripción */
+body.dark .topbar .marca p,
+body.dark .marca p {
+    color: #c7d1da !important;
+}
+
+/* Hora */
+body.dark #hora {
+    color: #90caf9 !important;
+}
+
+/* Botón modo oscuro */
+body.dark #modoOscuro {
+    background: #263648 !important;
+    color: #ffffff !important;
+    border: 2px solid #64b5f6;
+}
+
+/* Tarjetas */
+body.dark .card,
+body.dark .panel1,
+body.dark .panel2,
+body.dark form {
+    background: #1c2836 !important;
+    color: #ffffff;
+}
+
+/* Inputs */
+body.dark input,
+body.dark select {
+    background: #263648 !important;
+    color: #ffffff !important;
+    border-color: #43566b;
+}
+
+body.dark input::placeholder {
+    color: #bfc7d1;
+}
+
+/* Tablas */
+body.dark table {
+    background: #1c2836 !important;
+    color: #ffffff;
+}
+
+body.dark td {
+    background: #1c2836 !important;
+    color: #ffffff !important;
+    border-color: #43566b;
+}
+
+body.dark tbody tr:hover td {
+    background: #263648 !important;
 }
 
 /* =========================================================
