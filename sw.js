@@ -1,4 +1,4 @@
-const CACHE_NAME = "pc-manager-v5";
+const CACHE_NAME = "pc-manager-v6";
 
 const ARCHIVOS = [
     "./",
@@ -43,10 +43,6 @@ self.addEventListener("install", event => {
 
             .then(async cache => {
 
-                console.log(
-                    "Instalando PC Manager PWA..."
-                );
-
                 for (const archivo of ARCHIVOS) {
 
                     try {
@@ -54,14 +50,14 @@ self.addEventListener("install", event => {
                         await cache.add(archivo);
 
                         console.log(
-                            "✓ Guardado:",
+                            "Guardado:",
                             archivo
                         );
 
                     } catch (error) {
 
                         console.warn(
-                            "⚠ No se pudo guardar:",
+                            "No se pudo guardar:",
                             archivo
                         );
 
@@ -71,11 +67,7 @@ self.addEventListener("install", event => {
 
             })
 
-            .then(() => {
-
-                return self.skipWaiting();
-
-            })
+            .then(() => self.skipWaiting())
 
     );
 
@@ -91,7 +83,6 @@ self.addEventListener("activate", event => {
     event.waitUntil(
 
         caches.keys()
-
             .then(keys => {
 
                 return Promise.all(
@@ -99,12 +90,6 @@ self.addEventListener("activate", event => {
                     keys.map(key => {
 
                         if (key !== CACHE_NAME) {
-
-                            console.log(
-                                "Eliminando caché antigua:",
-                                key
-                            );
-
                             return caches.delete(key);
                         }
 
@@ -114,11 +99,7 @@ self.addEventListener("activate", event => {
 
             })
 
-            .then(() => {
-
-                return self.clients.claim();
-
-            })
+            .then(() => self.clients.claim())
 
     );
 
@@ -133,14 +114,13 @@ self.addEventListener("fetch", event => {
 
     const request = event.request;
 
-    // Solo peticiones GET
     if (request.method !== "GET") {
         return;
     }
 
     const url = new URL(request.url);
 
-    // No interceptar páginas o recursos externos
+    // No controlar recursos externos
     if (url.origin !== self.location.origin) {
         return;
     }
@@ -151,15 +131,13 @@ self.addEventListener("fetch", event => {
 
             .then(cachedResponse => {
 
-                // Primero buscar en caché
+                // Si está guardado, devolver exactamente
+                // el archivo solicitado.
                 if (cachedResponse) {
-
                     return cachedResponse;
-
                 }
 
-                // Si no está en caché,
-                // intentar obtenerlo de Internet
+                // Si no está guardado, intentar Internet.
                 return fetch(request)
 
                     .then(networkResponse => {
@@ -173,7 +151,6 @@ self.addEventListener("fetch", event => {
                                 networkResponse.clone();
 
                             caches.open(CACHE_NAME)
-
                                 .then(cache => {
 
                                     cache.put(
@@ -186,26 +163,6 @@ self.addEventListener("fetch", event => {
                         }
 
                         return networkResponse;
-
-                    })
-
-                    .catch(() => {
-
-                        /*
-                         * Si no hay Internet y el usuario
-                         * está intentando abrir una página,
-                         * mostrar el Dashboard.
-                         */
-
-                        if (
-                            request.mode === "navigate"
-                        ) {
-
-                            return caches.match(
-                                "./index.html"
-                            );
-
-                        }
 
                     });
 
