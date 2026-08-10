@@ -1,4 +1,4 @@
-const CACHE_NAME = "pc-manager-v6";
+const CACHE_NAME = "pc-manager-v7";
 
 const ARCHIVOS = [
     "./",
