@@ -752,72 +752,123 @@ button:active {
 /* =========================================================
    TABLAS
    ========================================================= */
+/* =====================================================
+   TABLAS
+   ===================================================== */
 
 .tabla-contenedor {
     width: 100%;
-
     overflow-x: auto;
 
-    border-radius: var(--radius);
+    margin-top: 20px;
 
-    -webkit-overflow-scrolling: touch;
+    border-radius: 12px;
 
-    box-shadow: var(--shadow);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
 }
+
+
+/* Tabla */
 
 table {
     width: 100%;
+    min-width: 650px;
 
-    min-width: 700px;
+    border-collapse: separate;
+    border-spacing: 0;
 
-    border-collapse: collapse;
+    background: #ffffff;
 
-    background: white;
+    overflow: hidden;
+
+    border-radius: 12px;
 }
 
+
+/* Encabezado */
+
 th {
-    padding: 13px 11px;
+    padding: 13px 12px;
 
-    background:
-        linear-gradient(
-            135deg,
-            var(--primary),
-            var(--primary-light)
-        );
+    background: var(--principal);
+    color: #ffffff;
 
-    color: white;
-
-    font-size: 13px;
-
+    font-size: 14px;
     font-weight: bold;
 
     text-align: center;
 
-    white-space: nowrap;
+    border: none;
 }
 
-td {
-    padding: 12px 10px;
 
-    border:
-        1px solid #e2e7eb;
+/* Celdas */
+
+td {
+    padding: 13px 12px;
+
+    background: #ffffff;
+    color: #333333;
 
     text-align: center;
 
-    font-size: 13px;
+    border-bottom: 1px solid #e0e0e0;
+    border-right: 1px solid #e0e0e0;
 
     vertical-align: middle;
 }
 
+
+/* Primera columna */
+
+th:first-child {
+    border-top-left-radius: 12px;
+}
+
+th:last-child {
+    border-top-right-radius: 12px;
+}
+
+
+/* Última fila */
+
+tbody tr:last-child td:first-child {
+    border-bottom-left-radius: 12px;
+}
+
+tbody tr:last-child td:last-child {
+    border-bottom-right-radius: 12px;
+}
+
+
+/* Efecto al pasar el mouse */
+
 tbody tr {
-    transition:
-        background var(--transition);
+    transition: 0.2s;
 }
 
-tbody tr:hover {
-    background: var(--surface-hover);
+tbody tr:hover td {
+    background: #f5f8fc;
 }
 
+
+/* =====================================================
+   TABLA EN MODO OSCURO
+   ===================================================== */
+
+body.dark table {
+    background: #1c2836;
+}
+
+body.dark td {
+    background: #1c2836;
+    color: #ffffff;
+    border-color: #394b5d;
+}
+
+body.dark tbody tr:hover td {
+    background: #263648;
+}
 
 /* =========================================================
    COLORES / ESTADOS
