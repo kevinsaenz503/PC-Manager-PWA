@@ -340,26 +340,89 @@ body {
    ENCABEZADO
    ========================================================= */
 
-header {
-    margin-bottom: 24px;
+/* =====================================================
+   ENCABEZADO PC MANAGER
+   ===================================================== */
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+    padding: 18px 22px;
+    background: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-header h1 {
-    color: var(--primary);
-
-    font-size: 32px;
-
-    line-height: 1.2;
-
-    margin-bottom: 5px;
+.marca {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 
-header p {
-    color: var(--text-light);
-
-    font-size: 15px;
+.marca h1 {
+    margin: 0;
+    color: var(--principal);
+    font-size: 30px;
+    font-weight: 700;
 }
 
+.marca p {
+    margin: 0;
+    color: #666;
+    font-size: 14px;
+}
+
+
+/* =====================================================
+   ACCIONES DEL ENCABEZADO
+   ===================================================== */
+
+.acciones {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#hora {
+    font-weight: bold;
+    color: var(--principal);
+}
+
+
+/* =====================================================
+   BOTÓN MODO OSCURO
+   ===================================================== */
+
+#modoOscuro {
+    width: 44px;
+    height: 44px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 10px;
+
+    background: var(--principal);
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+#modoOscuro:hover {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
 
 /* =========================================================
    TÍTULO DE MÓDULO
