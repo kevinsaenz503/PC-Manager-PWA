@@ -393,9 +393,6 @@ body {
 
 
 /* =====================================================
-  MODO OSCURO
-   ===================================================== */
-/* =====================================================
    MODO OSCURO - PC MANAGER
    ===================================================== */
 
@@ -797,9 +794,6 @@ button:active {
 }
 
 
-/* =========================================================
-   TABLAS
-   ========================================================= */
 /* =====================================================
    TABLAS
    ===================================================== */
@@ -835,20 +829,30 @@ table {
 
 /* Encabezado */
 
-th {
+/* =====================================================
+   ENCABEZADOS DE TODAS LAS TABLAS
+   ===================================================== */
+
+table thead th {
+    background: #1565C0 !important;
+    color: #ffffff !important;
+
     padding: 13px 12px;
 
-    background: var(--principal);
-    color: #ffffff;
-
-    font-size: 14px;
-    font-weight: bold;
-
     text-align: center;
+    font-weight: bold;
+    font-size: 14px;
 
     border: none;
 }
 
+
+/* Modo oscuro: mismos encabezados */
+
+body.dark table thead th {
+    background: #1565C0 !important;
+    color: #ffffff !important;
+}
 
 /* Celdas */
 
