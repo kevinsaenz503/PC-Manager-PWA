@@ -1769,3 +1769,460 @@ textarea:focus-visible {
     }
 
 }
+
+
+
+/* ==================================================
+   REPORTES DEL SISTEMA
+   ================================================== */
+
+
+/* Contenedor de las tarjetas */
+
+.reportes-resumen {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, minmax(0, 1fr));
+
+    gap: 20px;
+
+    margin-top: 25px;
+
+}
+
+
+/* Tarjetas */
+
+.reporte-card {
+
+    background: #ffffff;
+
+    padding: 25px 15px;
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.08);
+
+    transition: .3s;
+
+}
+
+
+.reporte-card:hover {
+
+    transform:
+        translateY(-5px);
+
+}
+
+
+.reporte-icono {
+
+    display: block;
+
+    font-size: 28px;
+
+    margin-bottom: 10px;
+
+}
+
+
+.reporte-card h3 {
+
+    margin: 0 0 10px;
+
+    font-size: 17px;
+
+    color: #263238;
+
+}
+
+
+.reporte-card strong {
+
+    display: block;
+
+    font-size: 30px;
+
+    color: #1565C0;
+
+}
+
+
+/* ==================================================
+   GRÁFICOS
+   ================================================== */
+
+.graficos-reportes {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 25px;
+
+    margin-top: 30px;
+
+}
+
+
+.grafico-panel {
+
+    background: #ffffff;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,.08);
+
+    min-width: 0;
+
+}
+
+
+.grafico-panel h2 {
+
+    margin: 0 0 20px;
+
+    font-size: 24px;
+
+    color: #263238;
+
+}
+
+
+/* Contenedor */
+
+.grafico-contenedor {
+
+    position: relative;
+
+    width: 100%;
+
+}
+
+
+/* Gráfico circular */
+
+.grafico-dona {
+
+    height: 380px;
+
+}
+
+
+/* Gráfico de barras */
+
+.grafico-barras {
+
+    height: 380px;
+
+}
+
+
+.grafico-contenedor canvas {
+
+    width: 100% !important;
+
+    height: 100% !important;
+
+}
+
+
+/* ==================================================
+   BOTONES
+   ================================================== */
+
+.acciones-reportes {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 15px;
+
+    margin-top: 25px;
+
+}
+
+
+.btn-principal {
+
+    width: 100%;
+
+    padding: 14px 20px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: #1565C0;
+
+    color: white;
+
+    font-weight: bold;
+
+    font-size: 15px;
+
+    cursor: pointer;
+
+    transition: .3s;
+
+}
+
+
+.btn-principal:hover {
+
+    background: #1976D2;
+
+    transform:
+        translateY(-2px);
+
+}
+
+
+/* ==================================================
+   MODO OSCURO
+   ================================================== */
+
+body.dark .reporte-card {
+
+    background: #1c2836;
+
+    color: white;
+
+}
+
+
+body.dark .reporte-card h3 {
+
+    color: white;
+
+}
+
+
+body.dark .reporte-card strong {
+
+    color: #64B5F6;
+
+}
+
+
+body.dark .grafico-panel {
+
+    background: #1c2836;
+
+    color: white;
+
+}
+
+
+body.dark .grafico-panel h2 {
+
+    color: white;
+
+}
+
+
+/* ==================================================
+   TABLET
+   ================================================== */
+
+@media (max-width: 1100px) {
+
+    .reportes-resumen {
+
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+
+    }
+
+}
+
+
+/* ==================================================
+   TABLET PEQUEÑA
+   ================================================== */
+
+@media (max-width: 900px) {
+
+    .graficos-reportes {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+
+/* ==================================================
+   TELÉFONO
+   ================================================== */
+
+@media (max-width: 700px) {
+
+    .reportes-resumen {
+
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+    }
+
+
+    .reporte-card {
+
+        padding: 18px 10px;
+
+    }
+
+
+    .reporte-card h3 {
+
+        font-size: 14px;
+
+    }
+
+
+    .reporte-card strong {
+
+        font-size: 25px;
+
+    }
+
+
+    .graficos-reportes {
+
+        grid-template-columns: 1fr;
+
+        gap: 15px;
+
+        margin-top: 20px;
+
+    }
+
+
+    .grafico-panel {
+
+        padding: 15px;
+
+    }
+
+
+    .grafico-panel h2 {
+
+        font-size: 21px;
+
+    }
+
+
+    .grafico-dona {
+
+        height: 300px;
+
+    }
+
+
+    .grafico-barras {
+
+        height: 300px;
+
+    }
+
+
+    .acciones-reportes {
+
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+
+    }
+
+}
+
+
+/* ==================================================
+   TELÉFONOS MUY PEQUEÑOS
+   ================================================== */
+
+@media (max-width: 400px) {
+
+    .reportes-resumen {
+
+        grid-template-columns: 1fr;
+
+    }
+
+
+    .grafico-dona {
+
+        height: 270px;
+
+    }
+
+
+    .grafico-barras {
+
+        height: 270px;
+
+    }
+
+}
+
+
+/* ==================================================
+   IMPRESIÓN
+   ================================================== */
+
+@media print {
+
+    .sidebar {
+
+        display: none !important;
+
+    }
+
+
+    .contenido {
+
+        width: 100%;
+
+        padding: 20px;
+
+    }
+
+
+    .acciones-reportes {
+
+        display: none !important;
+
+    }
+
+
+    .graficos-reportes {
+
+        grid-template-columns: 1fr 1fr;
+
+    }
+
+
+    .reporte-card,
+    .grafico-panel {
+
+        box-shadow: none;
+
+        border: 1px solid #ddd;
+
+    }
+
+}
