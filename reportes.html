@@ -1,163 +1,258 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#1565C0">
 
-<title>Reportes | PC Manager</title>
+    <title>Reportes - PC Manager</title>
 
-<link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="icon" href="./img/icon-192.png">
-<script src="./js/app.js" defer></script>
-
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body>
 
 <div class="container">
 
-<aside class="sidebar">
+    <!-- ==============================
+         MENÚ LATERAL
+         ============================== -->
 
-<h2>💻 PC Manager</h2>
+    <aside class="sidebar">
 
-<ul>
+        <h2>💻 PC Manager</h2>
 
-<li><a href="./">🏠 Dashboard</a></li>
-<li><a href="./computadoras">💻 Computadoras</a></li>
-<li><a href="./usuarios">👤 Usuarios</a></li>
-<li><a href="./prestamos">📦 Préstamos</a></li>
-<li><a href="./mantenimiento">🔧 Mantenimiento</a></li>
-<li><a href="./perifericos">🖨️ Periféricos</a></li>
-<li><a class="activo" href="./reportes">📊 Reportes</a></li>
-<li><a href="./configuracion">⚙ Configuración</a></li>
+        <ul>
 
-</ul>
+            <li>
+                <a href="index.html">🏠 Dashboard</a>
+            </li>
 
-</aside>
+            <li>
+                <a href="computadoras.html">💻 Computadoras</a>
+            </li>
 
-<main class="contenido">
+            <li>
+                <a href="usuarios.html">👤 Usuarios</a>
+            </li>
+
+            <li>
+                <a href="prestamos.html">📦 Préstamos</a>
+            </li>
+
+            <li>
+                <a href="mantenimiento.html">🔧 Mantenimiento</a>
+            </li>
+
+            <li>
+                <a href="perifericos.html">🖨️ Periféricos</a>
+            </li>
+
+            <li class="activo">
+                <a href="reportes.html">📊 Reportes</a>
+            </li>
+
+            <li>
+                <a href="configuracion.html">⚙️ Configuración</a>
+            </li>
+
+        </ul>
+
+    </aside>
 
 
-    
+    <!-- ==============================
+         CONTENIDO PRINCIPAL
+         ============================== -->
 
-<h1>📊 Reportes del Sistema</h1>
+    <main class="contenido">
 
-<div class="cards">
+        <!-- Encabezado -->
 
-<div class="card">
+        <div class="topbar">
 
-<h3>Computadoras</h3>
+            <div>
 
-<h2 id="pcTotal">0</h2>
+                <h1 class="titulo-pagina">
+                    📊 Reportes del Sistema
+                </h1>
+
+                <p>
+                    Resumen general de la información registrada
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==============================
+             TARJETAS DE RESUMEN
+             ============================== -->
+
+        <section class="reportes-resumen">
+
+            <div class="reporte-card">
+
+                <span class="reporte-icono">💻</span>
+
+                <h3>Computadoras</h3>
+
+                <strong id="totalComputadoras">0</strong>
+
+            </div>
+
+
+            <div class="reporte-card">
+
+                <span class="reporte-icono">👤</span>
+
+                <h3>Usuarios</h3>
+
+                <strong id="totalUsuarios">0</strong>
+
+            </div>
+
+
+            <div class="reporte-card">
+
+                <span class="reporte-icono">📦</span>
+
+                <h3>Préstamos</h3>
+
+                <strong id="totalPrestamos">0</strong>
+
+            </div>
+
+
+            <div class="reporte-card">
+
+                <span class="reporte-icono">🔧</span>
+
+                <h3>Mantenimientos</h3>
+
+                <strong id="totalMantenimientos">0</strong>
+
+            </div>
+
+
+            <div class="reporte-card">
+
+                <span class="reporte-icono">🖨️</span>
+
+                <h3>Periféricos</h3>
+
+                <strong id="totalPerifericos">0</strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==============================
+             GRÁFICOS
+             ============================== -->
+
+        <section class="graficos-reportes">
+
+
+            <!-- Estado de computadoras -->
+
+            <article class="grafico-panel">
+
+                <h2>
+                    💻 Estado de Computadoras
+                </h2>
+
+                <div class="grafico-contenedor grafico-dona">
+
+                    <canvas id="graficoEstado"></canvas>
+
+                </div>
+
+            </article>
+
+
+            <!-- Inventario general -->
+
+            <article class="grafico-panel">
+
+                <h2>
+                    📊 Inventario General
+                </h2>
+
+                <div class="grafico-contenedor grafico-barras">
+
+                    <canvas id="graficoInventario"></canvas>
+
+                </div>
+
+            </article>
+
+        </section>
+
+
+        <!-- ==============================
+             BOTONES
+             ============================== -->
+
+        <section class="acciones-reportes">
+
+            <button
+                type="button"
+                id="btnExportarCSV"
+                class="btn-principal">
+
+                📄 Exportar CSV
+
+            </button>
+
+
+            <button
+                type="button"
+                id="btnImprimir"
+                class="btn-principal">
+
+                🖨️ Imprimir
+
+            </button>
+
+        </section>
+
+
+    </main>
 
 </div>
 
-<div class="card">
 
-<h3>Usuarios</h3>
+<!-- JavaScript -->
 
-<h2 id="usuariosTotal">0</h2>
+<script src="js/reportes.js"></script>
 
-</div>
 
-<div class="card">
+<!-- Service Worker -->
 
-<h3>Préstamos</h3>
+<script>
 
-<h2 id="prestamosTotal">0</h2>
+if ("serviceWorker" in navigator) {
 
-</div>
+    window.addEventListener("load", () => {
 
-<div class="card">
-
-<h3>Mantenimientos</h3>
-
-<h2 id="mantenimientosTotal">0</h2>
-
-</div>
-
-<div class="card">
-
-<h3>Periféricos</h3>
-
-<h2 id="perifericosTotal">0</h2>
-
-</div>
-
-</div>
-
-<div class="paneles">
-
-<div class="panel">
-
-<h2>Estado de Computadoras</h2>
-
-<canvas id="graficaEstado"></canvas>
-
-</div>
-
-<div class="panel">
-
-<h2>Inventario General</h2>
-
-<canvas id="graficaInventario"></canvas>
-
-</div>
-
-</div>
-
-<div style="margin-top:30px;">
-
-<button id="exportarCSV">
-
-<i class="fa-solid fa-file-csv"></i>
-
-Exportar CSV
-
-</button>
-
-<button onclick="window.print()">
-
-<i class="fa-solid fa-print"></i>
-
-Imprimir
-
-</button>
-
-</div>
-
-</main>
-
-</div>
-
-<script src="./js/reportes.js"></script>
-
-    <script>
-
-if("serviceWorker" in navigator){
-
-    window.addEventListener("load",()=>{
-
-        navigator.serviceWorker.register("./sw.js")
-
-        .then(()=>{
-
-            console.log("✅ Service Worker registrado");
-
-        })
-
-        .catch(error=>{
-
-            console.error("Error:",error);
-
-        });
+        navigator.serviceWorker
+            .register("./sw.js")
+            .then(() => {
+                console.log("Service Worker registrado");
+            })
+            .catch(error => {
+                console.error(
+                    "Error al registrar Service Worker:",
+                    error
+                );
+            });
 
     });
 
