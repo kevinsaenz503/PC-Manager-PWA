@@ -1,486 +1,119 @@
-/* =====================================================
-   PC MANAGER
-   REPORTES
-   ===================================================== */
+const pcs = JSON.parse(localStorage.getItem("pcs")) || [];
+const usuarios = JSON.parse(localStorage.getItem("usuarios")) || [];
+const prestamos = JSON.parse(localStorage.getItem("prestamos")) || [];
+const mantenimientos = JSON.parse(localStorage.getItem("mantenimientos")) || [];
+const perifericos = JSON.parse(localStorage.getItem("perifericos")) || [];
 
+document.getElementById("pcTotal").textContent = pcs.length;
+document.getElementById("usuariosTotal").textContent = usuarios.length;
+document.getElementById("prestamosTotal").textContent = prestamos.length;
+document.getElementById("mantenimientosTotal").textContent = mantenimientos.length;
+document.getElementById("perifericosTotal").textContent = perifericos.length;
 
-/* =====================================================
-   OBTENER DATOS DEL LOCALSTORAGE
-   ===================================================== */
+const disponibles = pcs.filter(p => p.estado === "Disponible").length;
+const prestadas = pcs.filter(p => p.estado === "Prestada").length;
+const mantenimiento = pcs.filter(p => p.estado === "Mantenimiento").length;
 
-function obtenerDatos(clave) {
+new Chart(document.getElementById("graficaEstado"), {
 
-    try {
+type: "pie",
 
-        const datos = localStorage.getItem(clave);
+data: {
 
-        if (!datos) {
-            return [];
-        }
+labels: [
 
-        const resultado = JSON.parse(datos);
+"Disponible",
 
-        if (Array.isArray(resultado)) {
-            return resultado;
-        }
+"Prestada",
 
-        return [];
+"Mantenimiento"
 
-    } catch (error) {
+],
 
-        console.error(
-            "Error leyendo " + clave,
-            error
-        );
+datasets: [{
 
-        return [];
+data: [
 
-    }
+disponibles,
 
-}
+prestadas,
 
+mantenimiento
 
-/* =====================================================
-   DATOS
-   ===================================================== */
+]
 
-const computadoras =
-    obtenerDatos("computadoras");
-
-const usuarios =
-    obtenerDatos("usuarios");
-
-const prestamos =
-    obtenerDatos("prestamos");
-
-const mantenimientos =
-    obtenerDatos("mantenimientos");
-
-const perifericos =
-    obtenerDatos("perifericos");
-
-
-console.log("Computadoras:", computadoras);
-console.log("Usuarios:", usuarios);
-console.log("Préstamos:", prestamos);
-console.log("Mantenimientos:", mantenimientos);
-console.log("Periféricos:", perifericos);
-
-
-/* =====================================================
-   MOSTRAR CANTIDADES
-   ===================================================== */
-
-const pcTotal =
-    document.getElementById("pcTotal");
-
-const usuariosTotal =
-    document.getElementById("usuariosTotal");
-
-const prestamosTotal =
-    document.getElementById("prestamosTotal");
-
-const mantenimientosTotal =
-    document.getElementById("mantenimientosTotal");
-
-const perifericosTotal =
-    document.getElementById("perifericosTotal");
-
-
-if (pcTotal) {
-
-    pcTotal.textContent =
-        computadoras.length;
+}]
 
 }
-
-
-if (usuariosTotal) {
-
-    usuariosTotal.textContent =
-        usuarios.length;
-
-}
-
-
-if (prestamosTotal) {
-
-    prestamosTotal.textContent =
-        prestamos.length;
-
-}
-
-
-if (mantenimientosTotal) {
-
-    mantenimientosTotal.textContent =
-        mantenimientos.length;
-
-}
-
-
-if (perifericosTotal) {
-
-    perifericosTotal.textContent =
-        perifericos.length;
-
-}
-
-
-/* =====================================================
-   ESTADO DE COMPUTADORAS
-   ===================================================== */
-
-let disponibles = 0;
-
-let prestadas = 0;
-
-let enMantenimiento = 0;
-
-
-computadoras.forEach(computadora => {
-
-    const estado = String(
-
-        computadora.estado ??
-        computadora.disponibilidad ??
-        computadora.status ??
-        "Disponible"
-
-    ).toLowerCase().trim();
-
-
-    if (
-        estado.includes("prest")
-    ) {
-
-        prestadas++;
-
-    }
-
-    else if (
-        estado.includes("manten")
-    ) {
-
-        enMantenimiento++;
-
-    }
-
-    else {
-
-        disponibles++;
-
-    }
 
 });
 
+new Chart(document.getElementById("graficaInventario"), {
 
-console.log(
-    "Estados:",
-    disponibles,
-    prestadas,
-    enMantenimiento
-);
+type: "bar",
 
+data: {
 
-/* =====================================================
-   GRÁFICA ESTADO
-   ===================================================== */
+labels: [
 
-const canvasEstado =
-    document.getElementById(
-        "graficaEstado"
-    );
+"PC",
 
+"Usuarios",
 
-if (
-    canvasEstado &&
-    typeof Chart !== "undefined"
-) {
+"Préstamos",
 
-    new Chart(
-        canvasEstado,
-        {
+"Mantenimiento",
 
-            type: "doughnut",
+"Periféricos"
 
-            data: {
+],
 
-                labels: [
+datasets: [{
 
-                    "Disponible",
+label: "Cantidad",
 
-                    "Prestada",
+data: [
 
-                    "Mantenimiento"
+pcs.length,
 
-                ],
+usuarios.length,
 
-                datasets: [{
+prestamos.length,
 
-                    data: [
+mantenimientos.length,
 
-                        disponibles,
+perifericos.length
 
-                        prestadas,
+]
 
-                        enMantenimiento
-
-                    ],
-
-                    backgroundColor: [
-
-                        "#42A5F5",
-
-                        "#FF6384",
-
-                        "#FF9F40"
-
-                    ],
-
-                    borderColor: "#ffffff",
-
-                    borderWidth: 2
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-                plugins: {
-
-                    legend: {
-
-                        position: "top"
-
-                    }
-
-                }
-
-            }
-
-        }
-    );
+}]
 
 }
 
+});
 
-/* =====================================================
-   GRÁFICA INVENTARIO
-   ===================================================== */
+document.getElementById("exportarCSV").addEventListener("click", ()=>{
 
-const canvasInventario =
-    document.getElementById(
-        "graficaInventario"
-    );
+let csv="Modulo,Cantidad\n";
 
+csv+="Computadoras,"+pcs.length+"\n";
 
-if (
-    canvasInventario &&
-    typeof Chart !== "undefined"
-) {
+csv+="Usuarios,"+usuarios.length+"\n";
 
-    new Chart(
-        canvasInventario,
-        {
+csv+="Prestamos,"+prestamos.length+"\n";
 
-            type: "bar",
+csv+="Mantenimientos,"+mantenimientos.length+"\n";
 
-            data: {
+csv+="Perifericos,"+perifericos.length+"\n";
 
-                labels: [
+const blob = new Blob([csv],{type:"text/csv"});
 
-                    "PC",
+const a=document.createElement("a");
 
-                    "Usuarios",
+a.href=URL.createObjectURL(blob);
 
-                    "Préstamos",
+a.download="reporte.csv";
 
-                    "Mantenimiento",
+a.click();
 
-                    "Periféricos"
-
-                ],
-
-                datasets: [{
-
-                    label: "Cantidad",
-
-                    data: [
-
-                        computadoras.length,
-
-                        usuarios.length,
-
-                        prestamos.length,
-
-                        mantenimientos.length,
-
-                        perifericos.length
-
-                    ],
-
-                    backgroundColor:
-                        "#42A5F5",
-
-                    borderColor:
-                        "#1565C0",
-
-                    borderWidth: 1,
-
-                    borderRadius: 6
-
-                }]
-
-            },
-
-            options: {
-
-                responsive: true,
-
-                maintainAspectRatio: false,
-
-                scales: {
-
-                    y: {
-
-                        beginAtZero: true,
-
-                        ticks: {
-
-                            precision: 0
-
-                        }
-
-                    }
-
-                },
-
-                plugins: {
-
-                    legend: {
-
-                        display: true
-
-                    }
-
-                }
-
-            }
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   EXPORTAR CSV
-   ===================================================== */
-
-const botonCSV =
-    document.getElementById(
-        "exportarCSV"
-    );
-
-
-if (botonCSV) {
-
-    botonCSV.addEventListener(
-        "click",
-        () => {
-
-            const filas = [
-
-                [
-                    "Categoría",
-                    "Cantidad"
-                ],
-
-                [
-                    "Computadoras",
-                    computadoras.length
-                ],
-
-                [
-                    "Usuarios",
-                    usuarios.length
-                ],
-
-                [
-                    "Préstamos",
-                    prestamos.length
-                ],
-
-                [
-                    "Mantenimientos",
-                    mantenimientos.length
-                ],
-
-                [
-                    "Periféricos",
-                    perifericos.length
-                ]
-
-            ];
-
-
-            const csv = filas
-                .map(fila =>
-                    fila.join(",")
-                )
-                .join("\n");
-
-
-            const blob =
-                new Blob(
-                    [csv],
-                    {
-                        type:
-                            "text/csv;charset=utf-8;"
-                    }
-                );
-
-
-            const url =
-                URL.createObjectURL(
-                    blob
-                );
-
-
-            const enlace =
-                document.createElement(
-                    "a"
-                );
-
-
-            enlace.href = url;
-
-            enlace.download =
-                "reporte-pc-manager.csv";
-
-
-            document.body.appendChild(
-                enlace
-            );
-
-
-            enlace.click();
-
-
-            document.body.removeChild(
-                enlace
-            );
-
-
-            URL.revokeObjectURL(url);
-
-        }
-    );
-
-}
+});
